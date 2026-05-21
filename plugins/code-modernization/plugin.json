@@ -1,11 +1,32 @@
 {
   "name": "code-modernization",
-  "description": "Modernize legacy codebases (COBOL, legacy Java/C++, monolith web apps) with a structured assess \u2192 map \u2192 extract-rules \u2192 brief \u2192 reimagine/transform \u2192 harden workflow and specialist review agents",
-  "version": "0.0.0",
+  "description": "Modernize legacy codebases (COBOL, legacy Java/C++, monolith web apps) with a structured assess → map → extract-rules → brief → reimagine/transform → harden workflow and specialist review agents.",
+  "version": "1.0.0",
+  "license": "MIT",
   "author": {
-    "name": "Anthropic",
+    "name": "Anthropic (port by @saadmsft)",
     "email": "support@anthropic.com"
   },
+  "homepage": "https://github.com/saadmsft/ghcp-plugins-official",
+  "repository": "https://github.com/saadmsft/ghcp-plugins-official",
+  "keywords": ["modernization", "legacy-code", "refactoring", "cobol", "migration", "architecture", "code-review"],
+  "commands": [
+    "./prompts/claude-code-modernization-modernize-assess.prompt.md",
+    "./prompts/claude-code-modernization-modernize-brief.prompt.md",
+    "./prompts/claude-code-modernization-modernize-extract-rules.prompt.md",
+    "./prompts/claude-code-modernization-modernize-harden.prompt.md",
+    "./prompts/claude-code-modernization-modernize-map.prompt.md",
+    "./prompts/claude-code-modernization-modernize-reimagine.prompt.md",
+    "./prompts/claude-code-modernization-modernize-transform.prompt.md"
+  ],
+  "agents": [
+    "./agents/claude-code-modernization-architecture-critic.agent.md",
+    "./agents/claude-code-modernization-business-rules-extractor.agent.md",
+    "./agents/claude-code-modernization-legacy-analyst.agent.md",
+    "./agents/claude-code-modernization-security-auditor.agent.md",
+    "./agents/claude-code-modernization-test-engineer.agent.md"
+  ],
+  "skills": [],
   "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-modernization",
   "ghcp": {
     "prompts": [

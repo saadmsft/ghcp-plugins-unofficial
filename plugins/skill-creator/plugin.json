@@ -1,18 +1,23 @@
 {
   "name": "skill-creator",
   "description": "Create new skills, improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, or benchmark skill performance with variance analysis.",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "license": "MIT",
   "author": {
-    "name": "Anthropic",
+    "name": "Anthropic (port by @saadmsft)",
     "email": "support@anthropic.com"
   },
+  "homepage": "https://github.com/saadmsft/ghcp-plugins-official",
+  "repository": "https://github.com/saadmsft/ghcp-plugins-official",
+  "keywords": ["skill", "skill-creation", "evals", "benchmarking", "meta", "copilot-skills"],
+  "commands": [],
+  "agents": [],
+  "skills": ["./skills/claude-skill-creator-skill-creator/"],
   "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator",
   "ghcp": {
     "prompts": [],
     "agents": [],
-    "skills": [
-      "claude-skill-creator-skill-creator"
-    ],
+    "skills": ["claude-skill-creator-skill-creator"],
     "mcpServers": []
   }
 }

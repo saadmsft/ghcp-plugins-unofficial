@@ -1,16 +1,26 @@
 {
   "name": "agent-sdk-dev",
-  "description": "Claude Agent SDK Development Plugin",
-  "version": "0.0.0",
+  "description": "Build and verify applications with the Claude Agent SDK. Includes a scaffolding prompt for new SDK apps plus Python and TypeScript verifier agents that check configuration, best practices, and readiness for deployment.",
+  "version": "1.0.0",
+  "license": "MIT",
   "author": {
-    "name": "Anthropic",
+    "name": "Anthropic (port by @saadmsft)",
     "email": "support@anthropic.com"
   },
+  "homepage": "https://github.com/saadmsft/ghcp-plugins-official",
+  "repository": "https://github.com/saadmsft/ghcp-plugins-official",
+  "keywords": ["agent-sdk", "claude-agent-sdk", "python", "typescript", "scaffolding", "verifier", "ai-agents"],
+  "commands": [
+    "./prompts/claude-agent-sdk-dev-new-sdk-app.prompt.md"
+  ],
+  "agents": [
+    "./agents/claude-agent-sdk-dev-agent-sdk-verifier-py.agent.md",
+    "./agents/claude-agent-sdk-dev-agent-sdk-verifier-ts.agent.md"
+  ],
+  "skills": [],
   "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/agent-sdk-dev",
   "ghcp": {
-    "prompts": [
-      "claude-agent-sdk-dev-new-sdk-app.prompt.md"
-    ],
+    "prompts": ["claude-agent-sdk-dev-new-sdk-app.prompt.md"],
     "agents": [
       "claude-agent-sdk-dev-agent-sdk-verifier-py.agent.md",
       "claude-agent-sdk-dev-agent-sdk-verifier-ts.agent.md"
