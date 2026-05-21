@@ -1,222 +1,342 @@
-# ghcp-plugins-official
+<div align="center">
 
-> **A GitHub Copilot (VS Code) port of [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official).**
-> Unofficial. Not affiliated with or endorsed by Anthropic or GitHub. Upstream content is © Anthropic and contributors under Apache 2.0; per-plugin `LICENSE` files are preserved.
-
----
-
-## Table of contents
-
-1. [What this is and why it exists](#what-this-is-and-why-it-exists)
-2. [Quick start](#quick-start)
-3. [What gets installed where](#what-gets-installed-where)
-4. [Repo layout](#repo-layout)
-5. [Plugin catalog (21 plugins)](#plugin-catalog-21-plugins)
-6. [Install / uninstall reference](#install--uninstall-reference)
-7. [Keeping in sync with upstream](#keeping-in-sync-with-upstream)
-8. [Caveats and known limitations](#caveats-and-known-limitations)
-9. [More docs](#more-docs)
-10. [License & attribution](#license--attribution)
-
----
-
-## What this is and why it exists
-
-[Claude Code plugins](https://code.claude.com/docs/en/plugins) bundle slash commands, sub-agents, skills, MCP servers, and hooks into a single installable unit. GitHub Copilot Chat in VS Code has analogous concepts — **prompts**, **agents**, **skills**, **MCP servers** — but uses a *different on-disk layout and YAML frontmatter*, so a Claude plugin cannot be dropped into a Copilot install verbatim.
-
-This repo solves that by:
-
-1. **Cloning** the upstream marketplace (`anthropics/claude-plugins-official`).
-2. **Porting** each plugin's contents into GHCP-native file formats with sanitized frontmatter.
-3. **Restructuring** each plugin into a flat, self-contained directory under `plugins/<name>/`.
-4. **Shipping** an `install.sh` that copies the right files into your VS Code user-profile directories.
-5. **Providing** a `sync-from-upstream.sh` script so the fork stays current as upstream evolves.
-
-You install once globally, reload VS Code, and the prompts/agents/skills become available in Copilot Chat exactly as if you had authored them yourself.
-
-See **[docs/MAPPING.md](docs/MAPPING.md)** for the full feature-by-feature translation table and **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** for how the porter works internally.
-
----
-
-## Quick start
-
-```bash
-git clone <this-repo-url> ghcp-plugins-official
-cd ghcp-plugins-official
-
-./install.sh --list                  # see all 21 plugins
-./install.sh --dry-run code-review   # preview a single install
-./install.sh code-review feature-dev # install two plugins
-./install.sh                         # install everything
+```
+       ▄████ ██   ██  ▄████ ██████      🜲
+      ██     ██   ██ ██     ██   ██
+      ██     ███████ ██     ██████      plugins
+      ██  ██ ██   ██ ██     ██
+       ████  ██   ██  ████  ██          official · port
 ```
 
-Then in VS Code: <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> → **Developer: Reload Window**.
+# ✨ ghcp-plugins-official ✨
 
-In Copilot Chat, type `/` to see the new prompts (prefixed `claude-…`), `@` to pick agents, and skills will auto-trigger based on their descriptions.
+### _A constellation of Claude Code plugins, reborn for GitHub Copilot Chat in VS Code._
 
-For step-by-step install walkthroughs, troubleshooting, and verification commands, see **[docs/INSTALL.md](docs/INSTALL.md)**.
+[![License: MIT](https://img.shields.io/badge/Tooling-MIT-22c55e?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![Content: Apache 2.0](https://img.shields.io/badge/Content-Apache_2.0-3b82f6?style=for-the-badge&logo=apache&logoColor=white)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Plugins](https://img.shields.io/badge/Plugins-21-f59e0b?style=for-the-badge&logo=githubcopilot&logoColor=white)](#-the-pantheon)
+[![Artifacts](https://img.shields.io/badge/Artifacts-69-a855f7?style=for-the-badge)](#-the-pantheon)
+[![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
+[![Unofficial](https://img.shields.io/badge/Unofficial-fork-ef4444?style=for-the-badge)](https://github.com/anthropics/claude-plugins-official)
+
+<p>
+  <em>One repo. One <code>./install.sh</code>. Twenty-one specialist agents in your sidebar.</em><br/>
+  <sub>Not affiliated with Anthropic or GitHub. Upstream content © Anthropic & contributors (Apache 2.0).</sub>
+</p>
+
+<a href="#-quick-start"><img alt="Quick Start" src="https://img.shields.io/badge/▶_Quick_Start-1e293b?style=for-the-badge"></a>
+<a href="#-the-pantheon"><img alt="Plugins" src="https://img.shields.io/badge/🎭_Plugins-1e293b?style=for-the-badge"></a>
+<a href="docs/INSTALL.md"><img alt="Docs" src="https://img.shields.io/badge/📚_Docs-1e293b?style=for-the-badge"></a>
+<a href="#-architecture"><img alt="Architecture" src="https://img.shields.io/badge/🏛️_Architecture-1e293b?style=for-the-badge"></a>
+
+</div>
 
 ---
 
-## What gets installed where
+## 🌌 Why this exists
 
-| File type in this repo | Installed to (macOS)                                                | Surfaces in Copilot as            |
-|---|---|---|
-| `plugins/<P>/prompts/*.prompt.md` | `~/Library/Application Support/Code/User/prompts/`                  | `/claude-<P>-<command>` slash command |
-| `plugins/<P>/agents/*.agent.md`   | `~/Library/Application Support/Code/User/prompts/`                  | `@Claude: <P> — <agent>` chat participant |
-| `plugins/<P>/skills/<S>/...`      | `~/.copilot/skills/<S>/`                                            | Auto-triggered domain skill (by description) |
-| `plugins/<P>/mcp.json`            | **Not auto-installed** — manual merge into user `mcp.json` recommended | MCP tool surface in Copilot |
+[Claude Code plugins](https://code.claude.com/docs/en/plugins) bundle **slash commands · sub-agents · skills · MCP servers · hooks** into a single installable package. GitHub Copilot Chat in VS Code has the same building blocks — **prompts, agents, skills, MCP** — but speaks a *different on-disk dialect* and YAML frontmatter. So a Claude plugin can't drop in verbatim.
 
-Linux/WSL paths substitute `${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/` for the macOS `~/Library/Application Support/Code/User/` path. Windows is not auto-detected by `install.sh` yet — see **[docs/INSTALL.md](docs/INSTALL.md#windows)**.
+This repo is the **Rosetta stone** between the two ecosystems:
+
+```mermaid
+flowchart LR
+    A[📦 anthropics/<br/>claude-plugins-official] -->|git clone --depth 1| B[🛰️ repo/<br/><i>gitignored mirror</i>]
+    B -->|build-fork.py<br/><i>deterministic port</i>| C[✨ ghcp-plugins-official/<br/>plugins/]
+    C -->|./install.sh| D[💻 VS Code<br/>~/Library/.../prompts/]
+    C -->|./install.sh| E[🧠 ~/.copilot/skills/]
+    D --> F[(GitHub Copilot Chat<br/>prompts · agents · skills)]
+    E --> F
+    style A fill:#1e293b,stroke:#f59e0b,color:#f1f5f9
+    style C fill:#1e293b,stroke:#a855f7,color:#f1f5f9
+    style F fill:#1e293b,stroke:#22c55e,color:#f1f5f9
+```
+
+> [!TIP]
+> Install once, reload VS Code, and 21 specialist personas live in your `/` slash menu and `@` agent picker. Each is renamed `claude-<plugin>-…` so they never collide with your own customizations.
 
 ---
 
-## Repo layout
+## ⚡ Quick start
+
+```bash
+git clone https://github.com/saadmsft/ghcp-plugins-official.git
+cd ghcp-plugins-official
+
+./install.sh --list                     # 👀 see the roster
+./install.sh --dry-run code-review      # 🔍 preview a single install
+./install.sh code-review feature-dev    # 🎯 install two
+./install.sh                            # 🌊 install ALL 21
+```
+
+Then in VS Code:
+
+| | |
+|---|---|
+| ⌨️ | <kbd>⌘</kbd>+<kbd>⇧</kbd>+<kbd>P</kbd> → **Developer: Reload Window** |
+| `/` | Type a slash in Copilot Chat — `/claude-…` prompts appear |
+| `@` | Mention an agent — `@Claude: feature-dev — code-architect` |
+| 🧠 | Ask anything — skills auto-trigger by description |
+
+> [!NOTE]
+> Need a step-by-step? → **[docs/INSTALL.md](docs/INSTALL.md)** has macOS / Linux / Windows recipes, verification commands, and an MCP-merge walkthrough.
+
+---
+
+## 🗺️ What lands where
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  plugins/<P>/prompts/*.prompt.md   →   ~/Library/.../Code/User/prompts/ │  →  /claude-<P>-<cmd>
+│  plugins/<P>/agents/*.agent.md     →   ~/Library/.../Code/User/prompts/ │  →  @Claude: <P> — <agent>
+│  plugins/<P>/skills/<S>/...        →   ~/.copilot/skills/<S>/           │  →  auto-trigger by description
+│  plugins/<P>/mcp.json              →   ⛔ manual merge (your call)      │  →  MCP tools in Copilot
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+🍎 macOS path shown. Linux/WSL substitutes `${XDG_CONFIG_HOME:-$HOME/.config}/Code/User/`. Windows is documented in **[docs/INSTALL.md](docs/INSTALL.md#windows)**.
+
+---
+
+## 🎭 The Pantheon
+
+> **21 plugins · 26 prompts · 21 agents · 22 skills · 1 MCP placeholder**
+
+Each row is one plugin — its emoji is its calling card, its **codename** is your shortcut to remembering what it does, and the counts show what landed in your VS Code profile after `./install.sh`.
+
+| | Plugin | Codename | 💬 | 🤖 | 🧠 | 🔌 | Purpose |
+|---|---|---|---:|---:|---:|:---:|---|
+| 🛠️ | [`agent-sdk-dev`](plugins/agent-sdk-dev/) | **Hephaestus** | 1 | 2 | – | – | Verifies Anthropic Agent SDK apps (TS + Python) |
+| 🚀 | [`claude-code-setup`](plugins/claude-code-setup/) | **Genesis** | – | – | 1 | – | Onboarding skill — Claude Code first principles |
+| 📝 | [`claude-md-management`](plugins/claude-md-management/) | **Scribe** | 1 | – | 1 | – | Manage `CLAUDE.md` / `AGENTS.md` / `copilot-instructions.md` |
+| 🏛️ | [`code-modernization`](plugins/code-modernization/) | **Argonauts** | 7 | 5 | – | – | Legacy → modern pipeline: analyst · test-engineer · architecture-critic · security-auditor · business-rules-extractor |
+| 🔍 | [`code-review`](plugins/code-review/) | **The Tribunal** | 1 | – | – | – | Multi-agent PR review with confidence scoring |
+| ✂️ | [`code-simplifier`](plugins/code-simplifier/) | **Occam** | – | 1 | – | – | Refactor for clarity — preserves behavior |
+| 🌿 | [`commit-commands`](plugins/commit-commands/) | **Hermes** | 3 | – | – | – | Conventional commits, autocommit, PR helpers |
+| 🛠️ | [`cwc-makers`](plugins/cwc-makers/) | **The Makers** | 1 | – | 2 | – | "Code with Claude" maker workflows |
+| 🎒 | [`example-plugin`](plugins/example-plugin/) | **Hello-World** | 1 | – | 2 | ✓ | Reference plugin (MCP is placeholder) |
+| 🌱 | [`feature-dev`](plugins/feature-dev/) | **The Trinity** | 1 | 3 | – | – | spec → code-explorer → code-architect → code-reviewer loop |
+| 🎨 | [`frontend-design`](plugins/frontend-design/) | **Aesthete** | – | – | 1 | – | Design-system / UI conventions skill |
+| 🪝 | [`hookify`](plugins/hookify/) | **The Watcher** | 4 | 1 | 1 | – | Conversation-analyzer + helpers _(hooks themselves not ported)_ |
+| ➗ | [`math-olympiad`](plugins/math-olympiad/) | **Euclid** | – | – | 1 | – | Competition-math problem-solving |
+| 🔌 | [`mcp-server-dev`](plugins/mcp-server-dev/) | **The Forge** | – | – | 3 | – | Build · test · host MCP servers |
+| 🌉 | [`mcp-tunnels`](plugins/mcp-tunnels/) | **Iris** | 1 | – | – | – | Expose local MCP servers via tunnels |
+| 🎪 | [`playground`](plugins/playground/) | **Sandbox** | – | – | 1 | – | Scratch / experimentation skill |
+| 🧩 | [`plugin-dev`](plugins/plugin-dev/) | **Daedalus** | 1 | 3 | 7 | – | Author plugins: skill-reviewer · plugin-validator · agent-creator |
+| 🦅 | [`pr-review-toolkit`](plugins/pr-review-toolkit/) | **The Six** | 1 | 6 | – | – | Six specialist reviewers: silent-failure-hunter · type-design-analyzer · comment-analyzer · pr-test-analyzer · code-reviewer · code-simplifier |
+| 🔁 | [`ralph-loop`](plugins/ralph-loop/) | **Sisyphus** | 3 | – | – | – | "Run until done" iteration pattern |
+| 📒 | [`session-report`](plugins/session-report/) | **Chronicle** | – | – | 1 | – | Generate session / standup reports |
+| 🧪 | [`skill-creator`](plugins/skill-creator/) | **Athena** | – | – | 1 | – | Iteratively author + evaluate skills (485-line meta-skill) |
+
+<details>
+<summary>👻 <b>Plugins intentionally NOT ported</b> (and why) — click to expand</summary>
+
+| Category | Count | Plugins | Why skipped |
+|---|---:|---|---|
+| **LSP wrappers** | 12 | `clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp` | VS Code already has first-class LSP integrations. The Claude-side plugin only exists to wire LSPs into Claude Code's edit-event loop. |
+| **Hook / output-style only** | 3 | `explanatory-output-style`, `learning-output-style`, `security-guidance` | GHCP has no analog for Claude Code `hooks/` (shell scripts on `PostToolUse`, `UserPromptSubmit`) or output-style customization. |
+| **Placeholders** | 1 | `example-plugin`'s `.mcp.json` → `https://mcp.example.com/api` | Staged but not auto-merged into your MCP config. |
+
+Full reasoning: **[docs/MAPPING.md › what-cannot-be-ported](docs/MAPPING.md#what-cannot-be-ported)**
+
+</details>
+
+---
+
+## 🧭 Repo layout
 
 ```
 ghcp-plugins-official/
-├── plugins/                          # 21 ported plugins
+│
+├── 🚀  install.sh                  # the one button you came for
+├── 🧹  uninstall.sh                # reverse it surgically
+├── 🔄  sync-from-upstream.sh       # re-port from a fresh upstream clone
+├── 🗂️  marketplace.json            # machine-readable index of all 21
+│
+├── 📦  plugins/                    # 21 ported plugins, one folder each
 │   └── <plugin-name>/
-│       ├── plugin.json               # Metadata + GHCP inventory
-│       ├── prompts/                  # *.prompt.md — slash-command equivalents
-│       ├── agents/                   # *.agent.md  — sub-agent personas
-│       ├── skills/<name>/            # SKILL.md + bundled resources
-│       ├── mcp.json                  # MCP server defs (if applicable)
-│       ├── README.md                 # Per-plugin docs + install snippet
-│       └── LICENSE                   # Apache 2.0 (preserved from upstream)
+│       ├── plugin.json             # metadata + inventory
+│       ├── prompts/                # *.prompt.md  ── slash commands
+│       ├── agents/                 # *.agent.md   ── chat participants
+│       ├── skills/<name>/          # SKILL.md + bundled resources
+│       ├── mcp.json                # MCP server defs (if applicable)
+│       ├── README.md               # per-plugin docs + install snippet
+│       └── LICENSE                 # Apache 2.0, preserved from upstream
 │
-├── marketplace.json                  # Machine-readable index of all plugins
-├── install.sh                        # Install plugins into user profile
-├── uninstall.sh                      # Reverse the install
-├── sync-from-upstream.sh             # Re-port from a fresh upstream clone
+├── 📚  docs/
+│   ├── GHCP-PRIMER.md              # 🆕 New to Copilot customization? Start here.
+│   ├── MAPPING.md                  # 🔀 Claude → GHCP feature translation
+│   ├── INSTALL.md                  # 💿 Detailed install / verify / per-OS
+│   ├── TROUBLESHOOTING.md          # 🩺 Symptom → cause → fix
+│   ├── ARCHITECTURE.md             # 🏛️ How build-fork.py works
+│   └── PORTING.md                  # 🛠️ Add a plugin · customize porter
 │
-├── README.md                         # ← you are here
-├── LICENSE                           # MIT for tooling
-├── CHANGELOG.md                      # Version history
-├── CONTRIBUTING.md                   # How to add/fix plugins
-│
-└── docs/
-    ├── ARCHITECTURE.md               # How the porter works (internals)
-    ├── INSTALL.md                    # Detailed install/verify/troubleshoot
-    ├── MAPPING.md                    # Claude → GHCP feature translation
-    ├── PORTING.md                    # Add a new plugin or customize the porter
-    ├── GHCP-PRIMER.md                # What prompts/agents/skills/MCP are
-    └── TROUBLESHOOTING.md            # Symptom → cause → fix
+├── README.md                       # ← you are here
+├── LICENSE                         # MIT for tooling
+├── CHANGELOG.md
+└── CONTRIBUTING.md
 ```
 
-The porter (`build-fork.py`) lives **one level up** from this repo at `../build-fork.py` so the fork's working tree stays clean of build tooling. See **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** for why.
+> [!IMPORTANT]
+> The porter (`build-fork.py`) lives **one directory up** at `../build-fork.py` — the fork's working tree stays clean of build tooling. Architectural rationale: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
 ---
 
-## Plugin catalog (21 plugins)
-
-Totals after porting: **26 prompts · 21 agents · 22 skills · 1 MCP server (placeholder)**.
-
-| Plugin | Prompts | Agents | Skills | MCP | What it does |
-|---|---:|---:|---:|---:|---|
-| [`agent-sdk-dev`](plugins/agent-sdk-dev/) | 1 | 2 | 0 | – | Verify Anthropic Agent SDK apps (TS + Python) |
-| [`claude-code-setup`](plugins/claude-code-setup/) | 0 | 0 | 1 | – | Claude Code onboarding skill (mostly self-referential) |
-| [`claude-md-management`](plugins/claude-md-management/) | 1 | 0 | 1 | – | Manage `CLAUDE.md` files — applies to `AGENTS.md`/`copilot-instructions.md` too |
-| [`code-modernization`](plugins/code-modernization/) | 7 | 5 | 0 | – | Legacy → modern stack pipeline (analyst, test-engineer, architecture-critic, security-auditor, business-rules-extractor) |
-| [`code-review`](plugins/code-review/) | 1 | 0 | 0 | – | Multi-agent PR review with confidence scoring |
-| [`code-simplifier`](plugins/code-simplifier/) | 0 | 1 | 0 | – | Refactor for clarity without changing behavior |
-| [`commit-commands`](plugins/commit-commands/) | 3 | 0 | 0 | – | Conventional commits, autocommit, PR helpers |
-| [`cwc-makers`](plugins/cwc-makers/) | 1 | 0 | 2 | – | "Code with Claude" maker workflows |
-| [`example-plugin`](plugins/example-plugin/) | 1 | 0 | 2 | ✓ | Reference implementation (MCP is placeholder) |
-| [`feature-dev`](plugins/feature-dev/) | 1 | 3 | 0 | – | Spec → code-explorer → code-architect → code-reviewer loop |
-| [`frontend-design`](plugins/frontend-design/) | 0 | 0 | 1 | – | Design-system / UI conventions skill |
-| [`hookify`](plugins/hookify/) | 4 | 1 | 1 | – | (hooks not ported) Conversation-analyzer + helper prompts |
-| [`math-olympiad`](plugins/math-olympiad/) | 0 | 0 | 1 | – | Competition-math problem-solving skill |
-| [`mcp-server-dev`](plugins/mcp-server-dev/) | 0 | 0 | 3 | – | Build/test/host MCP servers |
-| [`mcp-tunnels`](plugins/mcp-tunnels/) | 1 | 0 | 0 | – | Expose local MCP servers via tunnels |
-| [`playground`](plugins/playground/) | 0 | 0 | 1 | – | Scratch / experimentation skill |
-| [`plugin-dev`](plugins/plugin-dev/) | 1 | 3 | 7 | – | Author Claude plugins (skill-reviewer, plugin-validator, agent-creator) |
-| [`pr-review-toolkit`](plugins/pr-review-toolkit/) | 1 | 6 | 0 | – | Six specialist PR reviewers (silent-failure-hunter, type-design-analyzer, comment-analyzer, …) |
-| [`ralph-loop`](plugins/ralph-loop/) | 3 | 0 | 0 | – | "Run until done" iteration pattern |
-| [`session-report`](plugins/session-report/) | 0 | 0 | 1 | – | Generate session/standup reports |
-| [`skill-creator`](plugins/skill-creator/) | 0 | 0 | 1 | – | Iteratively author & eval skills (485-line meta-skill) |
-
-### Plugins *not* ported (and why)
-
-- **12 LSP wrappers** (`clangd-lsp`, `csharp-lsp`, `gopls-lsp`, `jdtls-lsp`, `kotlin-lsp`, `lua-lsp`, `php-lsp`, `pyright-lsp`, `ruby-lsp`, `rust-analyzer-lsp`, `swift-lsp`, `typescript-lsp`) — VS Code already ships first-class LSP integrations for all of these; the Claude-side plugin only exists to wire LSPs into Claude Code's edit-event loop.
-- **3 hook/output-style-only plugins** (`explanatory-output-style`, `learning-output-style`, `security-guidance`) — GHCP has no analog for Claude Code's `hooks/` (shell scripts triggered on file edits) or output-style customization.
-- **1 example/placeholder** — `example-plugin`'s `.mcp.json` points at `https://mcp.example.com/api` and is staged but not auto-merged.
-
-Full reasoning in **[docs/MAPPING.md](docs/MAPPING.md#what-cannot-be-ported)**.
-
----
-
-## Install / uninstall reference
+## 🎛️ Install / uninstall reference
 
 ```bash
-./install.sh                              # install ALL plugins
-./install.sh code-review                  # install one
-./install.sh code-review feature-dev      # install several
-./install.sh --list                       # print plugin names, one per line
-./install.sh --dry-run                    # show what would be copied (no writes)
-./install.sh --dry-run code-modernization # combine with selection
-./install.sh -h                           # built-in help
+./install.sh                              # 🌊 install ALL plugins
+./install.sh code-review                  # 🎯 install one
+./install.sh code-review feature-dev      # 🎯 install several
+./install.sh --list                       # 📜 print plugin names, one per line
+./install.sh --dry-run                    # 👀 show what would be copied (no writes)
+./install.sh --dry-run code-modernization # 👀 combine with selection
+./install.sh -h                           # ❓ built-in help
 
-./uninstall.sh                            # remove ALL claude-plugins from your profile
-./uninstall.sh hookify                    # remove just one
+./uninstall.sh                            # 🧹 remove ALL claude-* from your profile
+./uninstall.sh hookify                    # 🧹 remove just one
 ```
 
-Behaviour notes:
+> [!CAUTION]
+> **Skills are removed-then-copied, not merged.** Any local edits inside `~/.copilot/skills/claude-…/` will be lost on re-install. Make changes in `plugins/<P>/skills/…` and re-run `./install.sh` instead.
 
-- The scripts are **idempotent** — re-running `install.sh` overwrites in place. Your own non-`claude-`-prefixed prompts/agents/skills are never touched.
-- Skills are removed and re-copied (not merged), so any local edits inside `~/.copilot/skills/claude-…/` will be lost on re-install. Make modifications in this repo's `plugins/<P>/skills/…` and re-run `install.sh` instead.
-- MCP servers are **never** auto-merged into your user `mcp.json` — you must do that by hand. The `mcp-tunnels` plugin is a special case discussed in **[docs/INSTALL.md](docs/INSTALL.md#mcp-servers)**.
+> [!WARNING]
+> **MCP servers are never auto-merged** into your user `mcp.json`. The porter stages them per-plugin so you can review and merge intentionally — see **[docs/INSTALL.md › MCP servers](docs/INSTALL.md#mcp-servers)**.
 
 ---
 
-## Keeping in sync with upstream
+## 🔄 Staying in sync with upstream
 
 ```bash
-./sync-from-upstream.sh
-git diff
+./sync-from-upstream.sh    # 1️⃣ pulls latest anthropics/claude-plugins-official
+                           # 2️⃣ regenerates plugins/ deterministically
+                           # 3️⃣ leaves your tree dirty for review
+git diff                   # 4️⃣ inspect what changed
 git commit -am "sync: $(date -u +%Y-%m-%d)"
 ```
 
-What this does, in order:
-1. Clones `anthropics/claude-plugins-official` to `../repo/` (or `git fetch && reset --hard origin/main` if already present).
-2. Runs `../build-fork.py`, which regenerates every file under `plugins/`.
-3. Leaves the working tree dirty so you can review and commit.
-
-The porter is deterministic — running it twice on the same upstream commit produces byte-identical output. That means `git diff` is a clean signal of "what changed upstream this cycle".
-
-Details: **[docs/PORTING.md](docs/PORTING.md#syncing)**.
+The porter is **byte-deterministic** — running it twice on the same upstream commit produces identical output. `git diff` is a clean signal of what changed upstream this cycle. Details: **[docs/PORTING.md › Syncing](docs/PORTING.md#syncing)**.
 
 ---
 
-## Caveats and known limitations
+## 🏛️ Architecture
 
-1. **Tool references don't translate.** Claude's `allowed-tools: Bash(gh pr view:*), Read, Grep` is dropped because GHCP's tool surface uses different names (`read`, `search`, `execute`, plus MCP tool IDs). Prompts that say "use a Haiku agent" or "spawn a sub-agent with the Task tool" will read as guidance under GHCP — they won't literally spawn sub-models. Most prose-style prompts still work well as instructions.
-2. **Hooks are dropped.** Claude Code's `hooks/` (shell scripts run on `PostToolUse`, `UserPromptSubmit`, etc.) have no GHCP analog. Plugins that *only* shipped hooks are skipped entirely.
-3. **Output styles are dropped.** Same reason.
-4. **MCP servers are staged, not installed.** Auto-merging into your user `mcp.json` risks clobbering your existing servers and prompt-string `inputs`. Manual merge gives you a chance to review.
-5. **Skills bigger than ~100 words description load lazily.** GHCP's progressive-disclosure loading means a skill's body only enters context when the description matches the user's request. If a ported skill never triggers, its description may need tuning — see **[docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md#skill-never-auto-triggers)**.
-6. **The `claude-` prefix is for hygiene, not branding.** It guarantees no collision with your own customizations and makes uninstall reliable, but it also means every slash-command is a mouthful (`/claude-code-review-code-review`). VS Code's command picker filters incrementally, so typing `/cl-co-re` usually narrows it.
+```mermaid
+flowchart TB
+    subgraph upstream["📦 anthropics/claude-plugins-official"]
+      U1[plugin.json]
+      U2[commands/*.md]
+      U3[agents/*.md]
+      U4[skills/&lt;n&gt;/SKILL.md]
+      U5[.mcp.json]
+    end
+
+    subgraph porter["⚙️ build-fork.py · deterministic"]
+      P1[parse_fm<br/><i>regex YAML</i>]
+      P2[emit_prompt]
+      P3[emit_agent]
+      P4[emit_skill]
+      P5[prefix all<br/>claude-&lt;plugin&gt;-]
+    end
+
+    subgraph fork["✨ ghcp-plugins-official/plugins/&lt;P&gt;/"]
+      F1[plugin.json]
+      F2[prompts/*.prompt.md]
+      F3[agents/*.agent.md]
+      F4[skills/&lt;n&gt;/SKILL.md]
+      F5[mcp.json · staged]
+    end
+
+    U1 --> P1
+    U2 --> P2 --> F2
+    U3 --> P3 --> F3
+    U4 --> P4 --> F4
+    U5 -.staged.-> F5
+    P1 --> F1
+    P5 -.applied to all.-> fork
+
+    style upstream fill:#0c4a6e,stroke:#38bdf8,color:#f0f9ff
+    style porter fill:#3b0764,stroke:#a855f7,color:#faf5ff
+    style fork fill:#14532d,stroke:#22c55e,color:#f0fdf4
+```
+
+**Seven invariants** the porter must preserve (full list in **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**):
+
+1. 🔒 **Idempotent** — running twice on same input = identical output
+2. 🪶 **Lossless naming** — every artifact prefixed `claude-<plugin>-`, never collides
+3. 📜 **Apache-preserving** — per-plugin `LICENSE` always copied verbatim
+4. ⚪ **No-PyYAML** — regex-only frontmatter parser, zero runtime dependencies
+5. 🛡️ **No mutation of installed files** — `install.sh` only copies, never edits
+6. 🚫 **No silent MCP merge** — user opts in manually for every server
+7. 🎯 **Skippable explicitly** — LSP/hook-only plugins are filtered with reasons logged
 
 ---
 
-## More docs
+## ⚠️ Caveats
 
-| Doc | When to read it |
+> [!WARNING]
+> 1. **🔧 Tool references don't translate.** Claude's `allowed-tools: Bash(gh pr view:*), Read, Grep` is stripped — GHCP's tool surface uses different names. Prompts that say "use a Haiku agent" or "spawn a sub-agent with the Task tool" become *guidance*, not literal sub-spawns. Prose-style prompts still work well.
+> 2. **🪝 Hooks are dropped.** No GHCP analog for `hooks/` shell scripts.
+> 3. **🎨 Output styles are dropped.** Same reason.
+> 4. **🔌 MCP servers are staged, not auto-installed.** Manual merge gives you a chance to review.
+> 5. **🧠 Skill triggers depend on description quality.** GHCP loads skills lazily by description match. A ported skill that never triggers usually needs description tuning — see **[TROUBLESHOOTING](docs/TROUBLESHOOTING.md#skill-never-auto-triggers)**.
+> 6. **🏷️ The `claude-` prefix is hygiene, not branding.** It guarantees no collision and reliable uninstall — at the cost of mouthful slash-commands like `/claude-pr-review-toolkit-review-pr`. VS Code's incremental filter helps.
+
+---
+
+## 📚 More docs
+
+| 📄 Doc | 🎯 When to read it |
 |---|---|
-| [`docs/GHCP-PRIMER.md`](docs/GHCP-PRIMER.md) | New to GHCP customization files? Start here. |
-| [`docs/MAPPING.md`](docs/MAPPING.md) | "What exactly does the porter do to a Claude command vs an agent vs a skill?" |
-| [`docs/INSTALL.md`](docs/INSTALL.md) | Detailed install + verification + per-OS notes |
+| [`docs/GHCP-PRIMER.md`](docs/GHCP-PRIMER.md)         | New to GHCP customization? Start here. |
+| [`docs/MAPPING.md`](docs/MAPPING.md)                 | "What exactly does the porter do to a command vs an agent vs a skill?" |
+| [`docs/INSTALL.md`](docs/INSTALL.md)                 | Detailed install + verification + per-OS notes + MCP-merge guide |
 | [`docs/TROUBLESHOOTING.md`](docs/TROUBLESHOOTING.md) | "I installed it but Copilot doesn't see it" |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How `build-fork.py` is structured + invariants |
-| [`docs/PORTING.md`](docs/PORTING.md) | Add a new plugin, customize porter behavior, contribute back |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Workflow for PRs |
-| [`CHANGELOG.md`](CHANGELOG.md) | What changed when |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)       | How `build-fork.py` is structured + invariants |
+| [`docs/PORTING.md`](docs/PORTING.md)                 | Add a new plugin · customize porter · contribute back |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md)                 | Workflow for PRs |
+| [`CHANGELOG.md`](CHANGELOG.md)                       | What changed when |
 
 ---
 
-## License & attribution
+## 💎 License & attribution
 
-- **Plugin content under `plugins/`** — © Anthropic and contributors, [Apache License 2.0](https://github.com/anthropics/claude-plugins-official/blob/main/LICENSE). Per-plugin `LICENSE` files are preserved verbatim.
-- **Porting scripts, install tooling, and docs in this fork** — [MIT](LICENSE), © 2026 Saad Mahmood.
+<table>
+<tr>
+<td width="50%">
 
-This is an unofficial port. Issues with plugin *content* should be filed against [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official). Issues with *porting* (a plugin doesn't load, frontmatter is malformed, etc.) belong here.
+### 📦 Plugin content (`plugins/`)
+**© Anthropic & contributors**
+[Apache License 2.0](https://github.com/anthropics/claude-plugins-official/blob/main/LICENSE)
+_Per-plugin `LICENSE` files preserved verbatim._
+
+</td>
+<td width="50%">
+
+### 🛠️ Porting scripts · tooling · docs
+**© 2026 Saad Mahmood**
+[MIT License](LICENSE)
+_The fork itself + `build-fork.py` + `install.sh`._
+
+</td>
+</tr>
+</table>
+
+> [!NOTE]
+> Issues with plugin **content** belong upstream at [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official/issues).
+> Issues with **porting** (plugin doesn't load, malformed YAML, install fails) belong [here](https://github.com/saadmsft/ghcp-plugins-official/issues).
+
+---
+
+<div align="center">
+
+```
+   ╔═══════════════════════════════════════════════╗
+   ║   built with 🧠 + ⌨️  · ported with 🛰️ + 🐍    ║
+   ║      shipped with ❤️  to GitHub Copilot       ║
+   ╚═══════════════════════════════════════════════╝
+```
+
+<sub>If this saved you an afternoon, ⭐ the repo. If it broke your morning, [open an issue](https://github.com/saadmsft/ghcp-plugins-official/issues/new).</sub>
+
+</div>
