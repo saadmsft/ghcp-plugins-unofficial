@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="1200" height="120" role="img" aria-label="built with love for GitHub Copilot">
+  <defs>
+    <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ec4899"/>
+      <stop offset="50%"  stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <radialGradient id="fglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="120" rx="20" fill="url(#fg)"/>
+  <circle cx="200"  cy="60" r="120" fill="url(#fglow)"/>
+  <circle cx="1000" cy="60" r="120" fill="url(#fglow)"/>
+
+  <g fill="#ffffff" opacity="0.9">
+    <circle cx="90"   cy="30" r="1.8"/>
+    <circle cx="1110" cy="90" r="1.8"/>
+    <circle cx="320"  cy="95" r="1.5"/>
+    <circle cx="880"  cy="25" r="1.5"/>
+  </g>
+
+  <text x="600" y="55"
+        text-anchor="middle"
+        font-family="SF Pro Display, -apple-system, Segoe UI, Inter, system-ui, sans-serif"
+        font-weight="700"
+        font-size="28"
+        fill="#ffffff">
+    built with ❤️  for GitHub Copilot
+  </text>
+  <text x="600" y="88"
+        text-anchor="middle"
+        font-family="SF Pro Text, -apple-system, Segoe UI, Inter, system-ui, sans-serif"
+        font-weight="500"
+        font-size="14"
+        fill="#ffffff"
+        opacity="0.85">
+    21 plugins · 69 artifacts · 1 install command
+  </text>
+</svg>

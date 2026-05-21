@@ -2,12 +2,9 @@
 
 <br/>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,50:a855f7,100:ec4899&height=180&section=header&text=ghcp-plugins&fontSize=58&fontColor=ffffff&fontAlignY=38&desc=A%20port%20of%20anthropics%2Fclaude-plugins-official%20for%20GitHub%20Copilot%20Chat&descSize=14&descAlignY=62&animation=fadeIn"/>
-  <img alt="ghcp-plugins-official banner" src="https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,50:a855f7,100:ec4899&height=180&section=header&text=ghcp-plugins&fontSize=58&fontColor=ffffff&fontAlignY=38&desc=A%20port%20of%20anthropics%2Fclaude-plugins-official%20for%20GitHub%20Copilot%20Chat&descSize=14&descAlignY=62&animation=fadeIn" width="100%"/>
-</picture>
+<img alt="ghcp-plugins-official" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-official/main/assets/banner.svg" width="100%"/>
 
-# ✨ `ghcp-plugins-official` ✨
+<br/>
 
 ### _A constellation of Claude Code plugins, reborn for GitHub Copilot Chat in VS Code._
 
@@ -329,10 +326,7 @@ _The fork itself + `build-fork.py` + `install.sh`._
 
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=0:ec4899,50:a855f7,100:6366f1&height=120&section=footer&text=built%20with%20%E2%9D%A4%EF%B8%8F%20for%20Copilot&fontSize=22&fontColor=ffffff&fontAlignY=70&animation=twinkling"/>
-  <img alt="footer" src="https://capsule-render.vercel.app/api?type=waving&color=0:ec4899,50:a855f7,100:6366f1&height=120&section=footer&text=built%20with%20%E2%9D%A4%EF%B8%8F%20for%20Copilot&fontSize=22&fontColor=ffffff&fontAlignY=70&animation=twinkling" width="100%"/>
-</picture>
+<img alt="footer" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-official/main/assets/footer.svg" width="100%"/>
 
 <sub>If this saved you an afternoon, ⭐ the repo. If it broke your morning, [open an issue](https://github.com/saadmsft/ghcp-plugins-official/issues/new).</sub>
 

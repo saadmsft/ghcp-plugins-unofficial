@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" width="1200" height="280" role="img" aria-label="ghcp-plugins-official — A port of anthropics/claude-plugins-official for GitHub Copilot Chat">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#6366f1"/>
+      <stop offset="50%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- background plate -->
+  <rect width="1200" height="280" rx="24" fill="url(#bg)"/>
+
+  <!-- decorative orbs -->
+  <circle cx="120"  cy="60"  r="160" fill="url(#glow)"/>
+  <circle cx="1080" cy="220" r="180" fill="url(#glow)"/>
+
+  <!-- floating sparkles -->
+  <g fill="#ffffff" opacity="0.85">
+    <circle cx="160"  cy="40"  r="2"/>
+    <circle cx="240"  cy="220" r="2.5"/>
+    <circle cx="940"  cy="50"  r="2"/>
+    <circle cx="1050" cy="120" r="3"/>
+    <circle cx="80"   cy="170" r="2"/>
+    <circle cx="1140" cy="60"  r="2"/>
+    <circle cx="580"  cy="30"  r="1.5"/>
+    <circle cx="700"  cy="250" r="2"/>
+  </g>
+
+  <!-- shimmer band -->
+  <rect x="-400" y="0" width="400" height="280" fill="url(#shine)">
+    <animate attributeName="x" from="-400" to="1200" dur="6s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- emoji crest -->
+  <text x="600" y="92" text-anchor="middle"
+        font-size="44"
+        font-family="Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji, sans-serif">
+    ✨ 🧩 ✨
+  </text>
+
+  <!-- wordmark -->
+  <text x="600" y="172" text-anchor="middle"
+        font-family="SF Pro Display, -apple-system, Segoe UI, Inter, system-ui, sans-serif"
+        font-weight="800"
+        font-size="78"
+        fill="#ffffff"
+        letter-spacing="-2">
+    ghcp-plugins-official
+  </text>
+
+  <!-- subtitle -->
+  <text x="600" y="220" text-anchor="middle"
+        font-family="SF Pro Text, -apple-system, Segoe UI, Inter, system-ui, sans-serif"
+        font-weight="500"
+        font-size="20"
+        fill="#ffffff"
+        opacity="0.92">
+    A port of anthropics/claude-plugins-official for GitHub Copilot Chat
+  </text>
+
+  <!-- bottom badge row -->
+  <g font-family="SF Pro Text, -apple-system, Segoe UI, Inter, system-ui, sans-serif"
+     font-size="13" font-weight="600" fill="#ffffff">
+    <g transform="translate(420,244)">
+      <rect width="68"  height="22" rx="11" fill="#ffffff" fill-opacity="0.18"/>
+      <text x="34" y="15" text-anchor="middle">21 plugins</text>
+    </g>
+    <g transform="translate(498,244)">
+      <rect width="78"  height="22" rx="11" fill="#ffffff" fill-opacity="0.18"/>
+      <text x="39" y="15" text-anchor="middle">26 prompts</text>
+    </g>
+    <g transform="translate(586,244)">
+      <rect width="70"  height="22" rx="11" fill="#ffffff" fill-opacity="0.18"/>
+      <text x="35" y="15" text-anchor="middle">21 agents</text>
+    </g>
+    <g transform="translate(666,244)">
+      <rect width="68"  height="22" rx="11" fill="#ffffff" fill-opacity="0.18"/>
+      <text x="34" y="15" text-anchor="middle">22 skills</text>
+    </g>
+    <g transform="translate(744,244)">
+      <rect width="36"  height="22" rx="11" fill="#ffffff" fill-opacity="0.18"/>
+      <text x="18" y="15" text-anchor="middle">MCP</text>
+    </g>
+  </g>
+</svg>
