@@ -1,0 +1,18 @@
+{
+  "name": "skill-creator",
+  "description": "Create new skills, improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, or benchmark skill performance with variance analysis.",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator",
+  "ghcp": {
+    "prompts": [],
+    "agents": [],
+    "skills": [
+      "claude-skill-creator-skill-creator"
+    ],
+    "mcpServers": []
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "code-modernization",
+  "description": "Modernize legacy codebases (COBOL, legacy Java/C++, monolith web apps) with a structured assess \u2192 map \u2192 extract-rules \u2192 brief \u2192 reimagine/transform \u2192 harden workflow and specialist review agents",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-modernization",
+  "ghcp": {
+    "prompts": [
+      "claude-code-modernization-modernize-assess.prompt.md",
+      "claude-code-modernization-modernize-brief.prompt.md",
+      "claude-code-modernization-modernize-extract-rules.prompt.md",
+      "claude-code-modernization-modernize-harden.prompt.md",
+      "claude-code-modernization-modernize-map.prompt.md",
+      "claude-code-modernization-modernize-reimagine.prompt.md",
+      "claude-code-modernization-modernize-transform.prompt.md"
+    ],
+    "agents": [
+      "claude-code-modernization-architecture-critic.agent.md",
+      "claude-code-modernization-business-rules-extractor.agent.md",
+      "claude-code-modernization-legacy-analyst.agent.md",
+      "claude-code-modernization-security-auditor.agent.md",
+      "claude-code-modernization-test-engineer.agent.md"
+    ],
+    "skills": [],
+    "mcpServers": []
+  }
+}

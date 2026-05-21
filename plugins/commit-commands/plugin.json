@@ -1,0 +1,20 @@
+{
+  "name": "commit-commands",
+  "description": "Streamline your git workflow with simple commands for committing, pushing, and creating pull requests",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/commit-commands",
+  "ghcp": {
+    "prompts": [
+      "claude-commit-commands-clean_gone.prompt.md",
+      "claude-commit-commands-commit-push-pr.prompt.md",
+      "claude-commit-commands-commit.prompt.md"
+    ],
+    "agents": [],
+    "skills": [],
+    "mcpServers": []
+  }
+}

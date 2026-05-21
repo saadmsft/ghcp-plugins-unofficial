@@ -1,0 +1,18 @@
+{
+  "name": "playground",
+  "description": "Creates interactive HTML playgrounds \u2014 self-contained single-file explorers with visual controls, live preview, and prompt output with copy button",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/playground",
+  "ghcp": {
+    "prompts": [],
+    "agents": [],
+    "skills": [
+      "claude-playground-playground"
+    ],
+    "mcpServers": []
+  }
+}

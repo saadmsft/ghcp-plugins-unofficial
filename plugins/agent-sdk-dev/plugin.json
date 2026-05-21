@@ -1,0 +1,21 @@
+{
+  "name": "agent-sdk-dev",
+  "description": "Claude Agent SDK Development Plugin",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/agent-sdk-dev",
+  "ghcp": {
+    "prompts": [
+      "claude-agent-sdk-dev-new-sdk-app.prompt.md"
+    ],
+    "agents": [
+      "claude-agent-sdk-dev-agent-sdk-verifier-py.agent.md",
+      "claude-agent-sdk-dev-agent-sdk-verifier-ts.agent.md"
+    ],
+    "skills": [],
+    "mcpServers": []
+  }
+}

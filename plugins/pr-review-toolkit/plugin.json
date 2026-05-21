@@ -1,0 +1,25 @@
+{
+  "name": "pr-review-toolkit",
+  "description": "Comprehensive PR review agents specializing in comments, tests, error handling, type design, code quality, and code simplification",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/pr-review-toolkit",
+  "ghcp": {
+    "prompts": [
+      "claude-pr-review-toolkit-review-pr.prompt.md"
+    ],
+    "agents": [
+      "claude-pr-review-toolkit-code-reviewer.agent.md",
+      "claude-pr-review-toolkit-code-simplifier.agent.md",
+      "claude-pr-review-toolkit-comment-analyzer.agent.md",
+      "claude-pr-review-toolkit-pr-test-analyzer.agent.md",
+      "claude-pr-review-toolkit-silent-failure-hunter.agent.md",
+      "claude-pr-review-toolkit-type-design-analyzer.agent.md"
+    ],
+    "skills": [],
+    "mcpServers": []
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "feature-dev",
+  "description": "Comprehensive feature development workflow with specialized agents for codebase exploration, architecture design, and quality review",
+  "version": "0.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  },
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/feature-dev",
+  "ghcp": {
+    "prompts": [
+      "claude-feature-dev-feature-dev.prompt.md"
+    ],
+    "agents": [
+      "claude-feature-dev-code-architect.agent.md",
+      "claude-feature-dev-code-explorer.agent.md",
+      "claude-feature-dev-code-reviewer.agent.md"
+    ],
+    "skills": [],
+    "mcpServers": []
+  }
+}

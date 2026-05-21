@@ -1,0 +1,15 @@
+{
+  "name": "session-report",
+  "description": "",
+  "version": "0.0.0",
+  "author": "Anthropic",
+  "upstream": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/session-report",
+  "ghcp": {
+    "prompts": [],
+    "agents": [],
+    "skills": [
+      "claude-session-report-session-report"
+    ],
+    "mcpServers": []
+  }
+}

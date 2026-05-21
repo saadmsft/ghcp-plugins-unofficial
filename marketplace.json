@@ -1,0 +1,254 @@
+{
+  "plugins": [
+    {
+      "name": "agent-sdk-dev",
+      "prompts": [
+        "claude-agent-sdk-dev-new-sdk-app.prompt.md"
+      ],
+      "agents": [
+        "claude-agent-sdk-dev-agent-sdk-verifier-py.agent.md",
+        "claude-agent-sdk-dev-agent-sdk-verifier-ts.agent.md"
+      ],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "claude-code-setup",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-claude-code-setup-claude-automation-recommender"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "claude-md-management",
+      "prompts": [
+        "claude-claude-md-management-revise-claude-md.prompt.md"
+      ],
+      "agents": [],
+      "skills": [
+        "claude-claude-md-management-claude-md-improver"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "code-modernization",
+      "prompts": [
+        "claude-code-modernization-modernize-assess.prompt.md",
+        "claude-code-modernization-modernize-brief.prompt.md",
+        "claude-code-modernization-modernize-extract-rules.prompt.md",
+        "claude-code-modernization-modernize-harden.prompt.md",
+        "claude-code-modernization-modernize-map.prompt.md",
+        "claude-code-modernization-modernize-reimagine.prompt.md",
+        "claude-code-modernization-modernize-transform.prompt.md"
+      ],
+      "agents": [
+        "claude-code-modernization-architecture-critic.agent.md",
+        "claude-code-modernization-business-rules-extractor.agent.md",
+        "claude-code-modernization-legacy-analyst.agent.md",
+        "claude-code-modernization-security-auditor.agent.md",
+        "claude-code-modernization-test-engineer.agent.md"
+      ],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "code-review",
+      "prompts": [
+        "claude-code-review-code-review.prompt.md"
+      ],
+      "agents": [],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "code-simplifier",
+      "prompts": [],
+      "agents": [
+        "claude-code-simplifier-code-simplifier.agent.md"
+      ],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "commit-commands",
+      "prompts": [
+        "claude-commit-commands-clean_gone.prompt.md",
+        "claude-commit-commands-commit-push-pr.prompt.md",
+        "claude-commit-commands-commit.prompt.md"
+      ],
+      "agents": [],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "cwc-makers",
+      "prompts": [
+        "claude-cwc-makers-maker-setup.prompt.md"
+      ],
+      "agents": [],
+      "skills": [
+        "claude-cwc-makers-cardputer-buddy",
+        "claude-cwc-makers-m5-onboard"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "example-plugin",
+      "prompts": [
+        "claude-example-plugin-example-command.prompt.md"
+      ],
+      "agents": [],
+      "skills": [
+        "claude-example-plugin-example-command",
+        "claude-example-plugin-example-skill"
+      ],
+      "mcp": [
+        "claude-example-plugin-example-server"
+      ]
+    },
+    {
+      "name": "feature-dev",
+      "prompts": [
+        "claude-feature-dev-feature-dev.prompt.md"
+      ],
+      "agents": [
+        "claude-feature-dev-code-architect.agent.md",
+        "claude-feature-dev-code-explorer.agent.md",
+        "claude-feature-dev-code-reviewer.agent.md"
+      ],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "frontend-design",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-frontend-design-frontend-design"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "hookify",
+      "prompts": [
+        "claude-hookify-configure.prompt.md",
+        "claude-hookify-help.prompt.md",
+        "claude-hookify-hookify.prompt.md",
+        "claude-hookify-list.prompt.md"
+      ],
+      "agents": [
+        "claude-hookify-conversation-analyzer.agent.md"
+      ],
+      "skills": [
+        "claude-hookify-writing-rules"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "math-olympiad",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-math-olympiad-math-olympiad"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "mcp-server-dev",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-mcp-server-dev-build-mcp-app",
+        "claude-mcp-server-dev-build-mcp-server",
+        "claude-mcp-server-dev-build-mcpb"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "mcp-tunnels",
+      "prompts": [
+        "claude-mcp-tunnels-create-docker-mcp-tunnel.prompt.md"
+      ],
+      "agents": [],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "playground",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-playground-playground"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "plugin-dev",
+      "prompts": [
+        "claude-plugin-dev-create-plugin.prompt.md"
+      ],
+      "agents": [
+        "claude-plugin-dev-agent-creator.agent.md",
+        "claude-plugin-dev-plugin-validator.agent.md",
+        "claude-plugin-dev-skill-reviewer.agent.md"
+      ],
+      "skills": [
+        "claude-plugin-dev-agent-development",
+        "claude-plugin-dev-command-development",
+        "claude-plugin-dev-hook-development",
+        "claude-plugin-dev-mcp-integration",
+        "claude-plugin-dev-plugin-settings",
+        "claude-plugin-dev-plugin-structure",
+        "claude-plugin-dev-skill-development"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "pr-review-toolkit",
+      "prompts": [
+        "claude-pr-review-toolkit-review-pr.prompt.md"
+      ],
+      "agents": [
+        "claude-pr-review-toolkit-code-reviewer.agent.md",
+        "claude-pr-review-toolkit-code-simplifier.agent.md",
+        "claude-pr-review-toolkit-comment-analyzer.agent.md",
+        "claude-pr-review-toolkit-pr-test-analyzer.agent.md",
+        "claude-pr-review-toolkit-silent-failure-hunter.agent.md",
+        "claude-pr-review-toolkit-type-design-analyzer.agent.md"
+      ],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "ralph-loop",
+      "prompts": [
+        "claude-ralph-loop-cancel-ralph.prompt.md",
+        "claude-ralph-loop-help.prompt.md",
+        "claude-ralph-loop-ralph-loop.prompt.md"
+      ],
+      "agents": [],
+      "skills": [],
+      "mcp": false
+    },
+    {
+      "name": "session-report",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-session-report-session-report"
+      ],
+      "mcp": false
+    },
+    {
+      "name": "skill-creator",
+      "prompts": [],
+      "agents": [],
+      "skills": [
+        "claude-skill-creator-skill-creator"
+      ],
+      "mcp": false
+    }
+  ]
+}
