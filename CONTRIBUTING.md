@@ -20,8 +20,8 @@ Thanks for considering a contribution. The scope of this fork is narrow: **port 
 
 ```bash
 # 1. Clone and set up
-git clone <your-fork-url> ghcp-plugins-official
-cd ghcp-plugins-official
+git clone <your-fork-url> ghcp-plugins-unofficial
+cd ghcp-plugins-unofficial
 
 # 2. Pull upstream Claude plugins (one-time)
 ./sync-from-upstream.sh

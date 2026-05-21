@@ -14,8 +14,8 @@ Detailed install, verification, and per-OS notes.
 
 ```bash
 # 1. Clone this fork
-git clone <repo-url> ghcp-plugins-official
-cd ghcp-plugins-official
+git clone <repo-url> ghcp-plugins-unofficial
+cd ghcp-plugins-unofficial
 
 # 2. Look around
 ./install.sh --list                   # see all 21 plugin names
@@ -154,7 +154,7 @@ If you want to *fully* reset (uninstall + delete the fork):
 ```bash
 ./uninstall.sh
 cd ..
-rm -rf ghcp-plugins-official repo
+rm -rf ghcp-plugins-unofficial repo
 ```
 
 ## Common issues

@@ -143,7 +143,7 @@ cp ../build-fork.py ./scripts/build-fork.py
 #   sed -i '' 's|python3 "$PARENT/build-fork.py"|python3 "$ROOT/scripts/build-fork.py"|' sync-from-upstream.sh
 # update build-fork.py:
 #   change UPSTREAM = HERE / "repo" / "plugins"   → HERE / ".." / "repo" / "plugins"
-#   change FORK = HERE / "ghcp-plugins-official"  → HERE / ".."
+#   change FORK = HERE / "ghcp-plugins-unofficial"  → HERE / ".."
 git add scripts/build-fork.py sync-from-upstream.sh
 git commit -m "vendor: in-tree porter"
 ```

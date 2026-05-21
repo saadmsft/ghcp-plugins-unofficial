@@ -65,7 +65,7 @@ This removes every `claude-*` file the fork installed, leaving your own customiz
 
 ```bash
 cd ..
-rm -rf ghcp-plugins-official repo
+rm -rf ghcp-plugins-unofficial repo
 ```
 
 ---

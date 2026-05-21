@@ -7,14 +7,14 @@
 | Field | Value |
 | --- | --- |
 | **Plugin name** | `code-modernization` |
-| **GitHub repository** | `saadmsft/ghcp-plugins-official` |
+| **GitHub repository** | `saadmsft/ghcp-plugins-unofficial` |
 | **Plugin path** | `plugins/code-modernization` |
 | **Immutable ref** | `refs/tags/v1.0.0` |
 | **Version** | `1.0.0` |
 | **License** | `MIT` |
 | **Author name** | `Saad Mahmood (port of anthropics/claude-plugins-official)` |
 | **Author URL** | `https://github.com/saadmsft` |
-| **Homepage URL** | `https://github.com/saadmsft/ghcp-plugins-official` |
+| **Homepage URL** | `https://github.com/saadmsft/ghcp-plugins-unofficial` |
 
 ## Short description
 
@@ -28,7 +28,7 @@ modernization, legacy-code, refactoring, cobol, migration, architecture, code-re
 
 ## Additional notes for reviewers
 
-This plugin is part of `ghcp-plugins-official`, a community port of [`anthropics/claude-plugins-official`](https://github.com/anthropics/claude-plugins-official) reshaped for GitHub Copilot Chat in VS Code (prompts / agents / skills layout, install via `install.sh` to the VS Code user profile).
+This plugin is part of `ghcp-plugins-unofficial`, a community port of [`anthropics/claude-plugins-official`](https://github.com/anthropics/claude-plugins-official) reshaped for GitHub Copilot Chat in VS Code (prompts / agents / skills layout, install via `install.sh` to the VS Code user profile).
 
 - 7 slash commands (`/modernize-assess`, `/modernize-map`, `/modernize-extract-rules`, `/modernize-brief`, `/modernize-reimagine`, `/modernize-transform`, `/modernize-harden`)
 - 5 specialist sub-agents (`legacy-analyst`, `business-rules-extractor`, `security-auditor`, `architecture-critic`, `test-engineer`)

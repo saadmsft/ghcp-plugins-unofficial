@@ -18,7 +18,7 @@ How the porter works, why files live where they do, and what invariants the buil
 │   port-report.md              ←  (from the first session)          │
 │   mcp-to-merge.json           ←                                    │
 │                                                                    │
-│   ghcp-plugins-official/      ← THE FORK (this git repo)           │
+│   ghcp-plugins-unofficial/      ← THE FORK (this git repo)           │
 │   ├── plugins/<P>/...           (regenerated from build-fork.py)   │
 │   ├── install.sh                                                   │
 │   ├── uninstall.sh                                                 │
@@ -53,7 +53,7 @@ upstream GitHub repo
        │   ├─ for mcp:    parse JSON, re-key with claude-<P>- prefix
        │   └─ emit plugin.json, README.md per plugin
        ▼
-   ghcp-plugins-official/plugins/<P>/...    ← OUTPUT (committed)
+   ghcp-plugins-unofficial/plugins/<P>/...    ← OUTPUT (committed)
        │
        │  install.sh copies into user profile
        ▼

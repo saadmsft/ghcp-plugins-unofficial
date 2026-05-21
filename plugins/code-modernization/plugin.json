@@ -7,8 +7,8 @@
     "name": "Anthropic (port by @saadmsft)",
     "email": "support@anthropic.com"
   },
-  "homepage": "https://github.com/saadmsft/ghcp-plugins-official",
-  "repository": "https://github.com/saadmsft/ghcp-plugins-official",
+  "homepage": "https://github.com/saadmsft/ghcp-plugins-unofficial",
+  "repository": "https://github.com/saadmsft/ghcp-plugins-unofficial",
   "keywords": ["modernization", "legacy-code", "refactoring", "cobol", "migration", "architecture", "code-review"],
   "commands": [
     "./prompts/claude-code-modernization-modernize-assess.prompt.md",

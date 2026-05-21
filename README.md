@@ -2,7 +2,7 @@
 
 <br/>
 
-<img alt="ghcp-plugins-official" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-official/main/assets/banner.svg" width="100%"/>
+<img alt="ghcp-plugins-unofficial" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-unofficial/main/assets/banner.svg" width="100%"/>
 
 <br/>
 
@@ -38,7 +38,7 @@ This repo is the **Rosetta stone** between the two ecosystems:
 ```mermaid
 flowchart LR
     A[📦 anthropics/<br/>claude-plugins-official] -->|git clone --depth 1| B[🛰️ repo/<br/><i>gitignored mirror</i>]
-    B -->|build-fork.py<br/><i>deterministic port</i>| C[✨ ghcp-plugins-official/<br/>plugins/]
+    B -->|build-fork.py<br/><i>deterministic port</i>| C[✨ ghcp-plugins-unofficial/<br/>plugins/]
     C -->|./install.sh| D[💻 VS Code<br/>~/Library/.../prompts/]
     C -->|./install.sh| E[🧠 ~/.copilot/skills/]
     D --> F[(GitHub Copilot Chat<br/>prompts · agents · skills)]
@@ -56,8 +56,8 @@ flowchart LR
 ## ⚡ Quick start
 
 ```bash
-git clone https://github.com/saadmsft/ghcp-plugins-official.git
-cd ghcp-plugins-official
+git clone https://github.com/saadmsft/ghcp-plugins-unofficial.git
+cd ghcp-plugins-unofficial
 
 ./install.sh --list                     # 👀 see the roster
 ./install.sh --dry-run code-review      # 🔍 preview a single install
@@ -142,7 +142,7 @@ Full reasoning: **[docs/MAPPING.md › what-cannot-be-ported](docs/MAPPING.md#wh
 ## 🧭 Repo layout
 
 ```
-ghcp-plugins-official/
+ghcp-plugins-unofficial/
 │
 ├── 🚀  install.sh                  # the one button you came for
 ├── 🧹  uninstall.sh                # reverse it surgically
@@ -235,7 +235,7 @@ flowchart TB
       P5[prefix all<br/>claude-&lt;plugin&gt;-]
     end
 
-    subgraph fork["✨ ghcp-plugins-official/plugins/&lt;P&gt;/"]
+    subgraph fork["✨ ghcp-plugins-unofficial/plugins/&lt;P&gt;/"]
       F1[plugin.json]
       F2[prompts/*.prompt.md]
       F3[agents/*.agent.md]
@@ -320,14 +320,14 @@ _The fork itself + `build-fork.py` + `install.sh`._
 
 > [!NOTE]
 > Issues with plugin **content** belong upstream at [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official/issues).
-> Issues with **porting** (plugin doesn't load, malformed YAML, install fails) belong [here](https://github.com/saadmsft/ghcp-plugins-official/issues).
+> Issues with **porting** (plugin doesn't load, malformed YAML, install fails) belong [here](https://github.com/saadmsft/ghcp-plugins-unofficial/issues).
 
 ---
 
 <div align="center">
 
-<img alt="footer" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-official/main/assets/footer.svg" width="100%"/>
+<img alt="footer" src="https://raw.githubusercontent.com/saadmsft/ghcp-plugins-unofficial/main/assets/footer.svg" width="100%"/>
 
-<sub>If this saved you an afternoon, ⭐ the repo. If it broke your morning, [open an issue](https://github.com/saadmsft/ghcp-plugins-official/issues/new).</sub>
+<sub>If this saved you an afternoon, ⭐ the repo. If it broke your morning, [open an issue](https://github.com/saadmsft/ghcp-plugins-unofficial/issues/new).</sub>
 
 </div>

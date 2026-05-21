@@ -7,14 +7,14 @@
 | Field | Value |
 | --- | --- |
 | **Plugin name** | `agent-sdk-dev` |
-| **GitHub repository** | `saadmsft/ghcp-plugins-official` |
+| **GitHub repository** | `saadmsft/ghcp-plugins-unofficial` |
 | **Plugin path** | `plugins/agent-sdk-dev` |
 | **Immutable ref** | `refs/tags/v1.0.0` |
 | **Version** | `1.0.0` |
 | **License** | `MIT` |
 | **Author name** | `Saad Mahmood (port of anthropics/claude-plugins-official)` |
 | **Author URL** | `https://github.com/saadmsft` |
-| **Homepage URL** | `https://github.com/saadmsft/ghcp-plugins-official` |
+| **Homepage URL** | `https://github.com/saadmsft/ghcp-plugins-unofficial` |
 
 ## Short description
 
@@ -28,7 +28,7 @@ agent-sdk, claude-agent-sdk, python, typescript, scaffolding, verifier, ai-agent
 
 ## Additional notes for reviewers
 
-Part of `ghcp-plugins-official`, a community port of [`anthropics/claude-plugins-official`](https://github.com/anthropics/claude-plugins-official) reshaped for GitHub Copilot Chat in VS Code.
+Part of `ghcp-plugins-unofficial`, a community port of [`anthropics/claude-plugins-official`](https://github.com/anthropics/claude-plugins-official) reshaped for GitHub Copilot Chat in VS Code.
 
 - 1 slash command (`/new-sdk-app`)
 - 2 sub-agents: `agent-sdk-verifier-py`, `agent-sdk-verifier-ts`
